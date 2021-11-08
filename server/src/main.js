@@ -1,12 +1,24 @@
 const express = require('express');
+const database = require('./database');
+const { User } = require('./database/User');
 
-const app = express();
-const port = process.env.PORT || 8080;
+const main = async () => {
+  const app = express();
+  const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+  app.get('/:username', async (req, res) => {
+    const u = new User();
+    u.username = req.params.username;
+    u.password = 'secret';
+    await u.save();
 
-app.listen(port, () => {
-  console.log(`listening at http://localhost:${port}.`);
-});
+    res.send('Hello World!');
+  });
+
+  await database.database.connectToDatabase();
+  app.listen(port, () => {
+    console.log(`listening at http://localhost:${port}.`);
+  });
+};
+
+main();
