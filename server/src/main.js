@@ -15,6 +15,7 @@ const main = async () => {
   app.use('/about.json', routes.about);
 
   app.use('/services', authMiddleware, routes.services);
+  app.use('/instances', authMiddleware, routes.instances);
 
   await database.database.connectToDatabase();
   app.listen(port, () => {

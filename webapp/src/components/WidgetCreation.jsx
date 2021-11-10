@@ -19,11 +19,18 @@ const WidgetCreation = ({ step, nextStep, close }) => {
     nextStep();
   };
 
-  const addWidget = (params) => {
-    console.log(selectedService);
-    console.log(selectedWidget);
-    console.log(params);
-    close();
+  const addWidget = async (params) => {
+    const res = await request('/instances', 'POST', {
+      service: selectedService,
+      widget: selectedWidget,
+      params,
+    });
+
+    if (res.status) {
+      close();
+      return;
+    }
+    console.log(res.error);
   };
 
   useEffect(async () => {

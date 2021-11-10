@@ -34,8 +34,9 @@ const IntegerParameter = ({ param, updateParameter }) => {
         fullWidth
         value={value}
         onChange={(e) => {
-          setValue(e.target.value);
-          updateParameter(param.name, e.target.value);
+          const val = parseInt(e.target.value, 10);
+          setValue(val);
+          updateParameter(param.name, val);
         }}
       />
     </Box>
