@@ -9,7 +9,4 @@ const UserSchema = new Schema({
 
 const User = model(TABLE_NAME, UserSchema);
 
-module.exports = {
-  User,
-  UserSchema,
-};
+module.exports = User;

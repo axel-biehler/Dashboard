@@ -1,19 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const database = require('./database');
-const { User } = require('./database/User');
+const routes = require('./routes');
 
 const main = async () => {
   const app = express();
   const port = process.env.PORT || 8080;
 
-  app.get('/:username', async (req, res) => {
-    const u = new User();
-    u.username = req.params.username;
-    u.password = 'secret';
-    await u.save();
+  app.use(cors());
 
-    res.send('Hello World!');
-  });
+  app.use(express.json());
+  app.use('/auth', routes.authentication);
 
   await database.database.connectToDatabase();
   app.listen(port, () => {
