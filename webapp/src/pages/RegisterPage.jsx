@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import {
   Card, CardContent, Container, Typography, TextField, Button, Grid, Alert, AlertTitle,
 } from '@mui/material';
-import { request } from '../api';
+import request from '../api/request';
 
 const RegisterPage = () => {
   const history = useHistory();
@@ -30,7 +30,7 @@ const RegisterPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Card sx={{ mt: 4 }}>
+      <Card sx={{ mt: 12 }}>
         <CardContent>
           <Typography variant="h2" sx={{ fontWeight: 'bold' }}>Register</Typography>
           <TextField
