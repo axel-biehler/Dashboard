@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { LoginPage, LogoutPage, RegisterPage } from './pages';
+import {
+  HomePage, IndexPage, LoginPage, LogoutPage, NotFoundPage, RegisterPage,
+} from './pages';
 
 const App = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/">
-        <p>Hi</p>
+        <IndexPage />
       </Route>
       <Route path="/home">
-        <p>Home</p>
+        <HomePage />
       </Route>
       <Route path="/register">
         <RegisterPage />
@@ -20,6 +22,7 @@ const App = () => (
       <Route path="/logout">
         <LogoutPage />
       </Route>
+      <NotFoundPage />
     </Switch>
   </BrowserRouter>
 );
