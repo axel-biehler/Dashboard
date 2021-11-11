@@ -12,13 +12,18 @@ const HomePage = () => {
     setInstances(res.instances);
   };
 
+  const deleteInstance = async (id) => {
+    await request(`/instances/${id}`, 'DELETE');
+    await loadInstances();
+  };
+
   useEffect(loadInstances, []);
 
   return (
     <div>
       <AppBar />
       <WidgetCreationModal refreshInstances={loadInstances} />
-      <InstancesGrid instances={instances} />
+      <InstancesGrid instances={instances} deleteInstance={deleteInstance} />
     </div>
   );
 };

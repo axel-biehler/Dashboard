@@ -21,12 +21,16 @@ const InstanceSwitch = ({ instance, data }) => {
   }
 };
 
-const Instance = ({ instance }) => {
+const Instance = ({ instance, deleteInstance }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
   const loadData = async () => {
+    setIsLoading(true);
+    setError(null);
+    setData(null);
+
     const res = await request(`/instances/${instance.service}/${instance.widget}/${instance._id}`);
     if (res.status) {
       setData(res);
@@ -35,6 +39,14 @@ const Instance = ({ instance }) => {
       setError(res.error);
       setIsLoading(false);
     }
+  };
+
+  const onRefreshClick = async () => {
+    await loadData();
+  };
+
+  const onDeleteClick = async () => {
+    deleteInstance(instance._id);
   };
 
   useEffect(loadData, []);
@@ -46,8 +58,8 @@ const Instance = ({ instance }) => {
           <CircularProgress />
         </CardContent>
         <CardActions sx={{ float: 'right' }}>
-          <Button size="small"><Refresh /></Button>
-          <Button size="small"><Close /></Button>
+          <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
+          <Button size="small" onClick={onDeleteClick}><Close /></Button>
         </CardActions>
       </Card>
     );
@@ -60,8 +72,8 @@ const Instance = ({ instance }) => {
           <Alert severity="error">{error}</Alert>
         </CardContent>
         <CardActions sx={{ float: 'right' }}>
-          <Button size="small"><Refresh /></Button>
-          <Button size="small"><Close /></Button>
+          <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
+          <Button size="small" onClick={onDeleteClick}><Close /></Button>
         </CardActions>
       </Card>
     );
@@ -73,8 +85,8 @@ const Instance = ({ instance }) => {
         <InstanceSwitch instance={instance} data={data} />
       </CardContent>
       <CardActions sx={{ float: 'right' }}>
-        <Button size="small"><Refresh /></Button>
-        <Button size="small"><Close /></Button>
+        <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
+        <Button size="small" onClick={onDeleteClick}><Close /></Button>
       </CardActions>
     </Card>
 
