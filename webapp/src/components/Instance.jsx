@@ -1,14 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import {
-  Card, CardContent, CardActions, Button, CircularProgress, Alert,
+  Button, CircularProgress, Alert,
 } from '@mui/material';
 import Refresh from '@mui/icons-material/Refresh';
 import Close from '@mui/icons-material/Close';
 import CityTemperature from './services/weather/CityTemperature';
 import request from '../api/request';
-
-const INSTANCE_HEIGHT = 200;
 
 const InstanceSwitch = ({ instance, data }) => {
   switch (instance.service) {
@@ -57,45 +55,28 @@ const Instance = ({ instance, deleteInstance }) => {
     return () => (clearInterval(interval));
   }, []);
 
+  let cardContent = null;
   if (isLoading) {
-    return (
-      <Card>
-        <CardContent sx={{ height: INSTANCE_HEIGHT }}>
-          <CircularProgress />
-        </CardContent>
-        <CardActions sx={{ float: 'right' }}>
-          <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
-          <Button size="small" onClick={onDeleteClick}><Close /></Button>
-        </CardActions>
-      </Card>
-    );
-  }
-
-  if (error !== null) {
-    return (
-      <Card>
-        <CardContent sx={{ height: INSTANCE_HEIGHT }}>
-          <Alert severity="error">{error}</Alert>
-        </CardContent>
-        <CardActions sx={{ float: 'right' }}>
-          <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
-          <Button size="small" onClick={onDeleteClick}><Close /></Button>
-        </CardActions>
-      </Card>
-    );
+    cardContent = <CircularProgress />;
+  } else if (error !== null) {
+    cardContent = <Alert severity="error">{error}</Alert>;
+  } else {
+    cardContent = <InstanceSwitch instance={instance} data={data} />;
   }
 
   return (
-    <Card>
-      <CardContent sx={{ height: INSTANCE_HEIGHT }}>
-        <InstanceSwitch instance={instance} data={data} />
-      </CardContent>
-      <CardActions sx={{ float: 'right' }}>
+    <div style={{
+      display: 'flex', flexDirection: 'column', height: '100%', position: 'relative',
+    }}
+    >
+      <div style={{ display: 'block', padding: '8px' }}>
+        {cardContent}
+      </div>
+      <div style={{ position: 'absolute', bottom: 8, right: 8 }}>
         <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
         <Button size="small" onClick={onDeleteClick}><Close /></Button>
-      </CardActions>
-    </Card>
-
+      </div>
+    </div>
   );
 };
 

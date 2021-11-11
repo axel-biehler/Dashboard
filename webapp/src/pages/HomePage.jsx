@@ -22,8 +22,8 @@ const HomePage = () => {
   return (
     <div>
       <AppBar />
-      <WidgetCreationModal refreshInstances={loadInstances} />
       <InstancesGrid instances={instances} deleteInstance={deleteInstance} />
+      <WidgetCreationModal refreshInstances={loadInstances} />
     </div>
   );
 };
