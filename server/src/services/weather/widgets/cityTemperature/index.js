@@ -10,11 +10,6 @@ const metadata = {
       type: 'string',
       placeholder: 'City name',
     },
-    {
-      name: 'refreshRate',
-      type: 'integer',
-      placeholder: 'Refresh rate (in seconds)',
-    },
   ],
 };
 
