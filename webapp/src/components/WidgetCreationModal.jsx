@@ -9,7 +9,10 @@ const WidgetCreationModal = ({ refreshInstances }) => {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setStep(0);
+  };
 
   const nextStep = () => {
     setStep(step + 1);
