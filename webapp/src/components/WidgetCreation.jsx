@@ -4,7 +4,9 @@ import WidgetCreationParameters from './WidgetCreationParameters';
 import WidgetCreationServiceSelection from './WidgetCreationServiceSelection';
 import WidgetCreationWidgetSelection from './WidgetCreationWidgetSelection';
 
-const WidgetCreation = ({ step, nextStep, close }) => {
+const WidgetCreation = ({
+  step, nextStep, close, refreshInstances,
+}) => {
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedWidget, setSelectedWidget] = useState(null);
@@ -27,6 +29,7 @@ const WidgetCreation = ({ step, nextStep, close }) => {
     });
 
     if (res.status) {
+      refreshInstances();
       close();
       return;
     }

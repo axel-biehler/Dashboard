@@ -5,7 +5,7 @@ import {
 import Add from '@mui/icons-material/Add';
 import WidgetCreation from './WidgetCreation';
 
-const WidgetCreationModal = () => {
+const WidgetCreationModal = ({ refreshInstances }) => {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const handleOpen = () => setOpen(true);
@@ -40,7 +40,12 @@ const WidgetCreationModal = () => {
                   {step === 0 ? 'Close' : 'Previous step' }
                 </Button>
               </Typography>
-              <WidgetCreation step={step} nextStep={nextStep} close={handleClose} />
+              <WidgetCreation
+                step={step}
+                nextStep={nextStep}
+                close={handleClose}
+                refreshInstances={refreshInstances}
+              />
             </CardContent>
           </Card>
         </Container>
