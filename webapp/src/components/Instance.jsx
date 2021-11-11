@@ -49,7 +49,13 @@ const Instance = ({ instance, deleteInstance }) => {
     deleteInstance(instance._id);
   };
 
-  useEffect(loadData, []);
+  useEffect(() => {
+    loadData();
+    const interval = setInterval(() => {
+      loadData();
+    }, instance.params.refreshRate * 1000);
+    return () => (clearInterval(interval));
+  }, []);
 
   if (isLoading) {
     return (
