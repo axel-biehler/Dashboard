@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const database = require('./database');
 const routes = require('./routes');
+const { authMiddleware } = require('./authentication');
 
 const main = async () => {
   const app = express();
@@ -11,6 +12,10 @@ const main = async () => {
 
   app.use(express.json());
   app.use('/auth', routes.authentication);
+  app.use('/about.json', routes.about);
+
+  app.use('/services', authMiddleware, routes.services);
+  app.use('/instances', authMiddleware, routes.instances);
 
   await database.database.connectToDatabase();
   app.listen(port, () => {

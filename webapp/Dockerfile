@@ -1,11 +1,12 @@
-FROM node:16.13.0
+FROM node:16.13.0 as builder
 ENV NODE_ENV=production
-
-COPY package.json ./
-COPY package-lock.json ./
+WORKDIR /app
+COPY package*.json ./
 RUN npm install --production
-RUN npm install react-scripts@3.4.1 -g
+COPY . .
+RUN npm run build
 
-COPY . ./
-
-CMD ["npm", "start"]
+FROM nginx
+EXPOSE 3000
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/build /usr/share/nginx/html
