@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppBar from '../components/AppBar';
 import InstancesGrid from '../components/InstancesGrid';
 import WidgetCreationModal from '../components/WidgetCreationModal';
@@ -6,10 +7,20 @@ import request from '../api/request';
 
 const HomePage = () => {
   const [instances, setInstances] = useState([]);
+  const history = useHistory();
 
   const loadInstances = async () => {
-    const res = await request('/instances');
-    setInstances(res.instances);
+    try {
+      const res = await request('/instances');
+      if (res === undefined) {
+        history.push('/login');
+        return;
+      }
+
+      setInstances(res.instances);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const deleteInstance = async (id) => {

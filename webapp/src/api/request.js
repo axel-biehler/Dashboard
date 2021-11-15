@@ -14,8 +14,10 @@ const request = async (route, method = 'GET', body = undefined) => {
     },
     body: JSON.stringify(body),
   });
-  const resBody = await res.json();
 
+  if (res.status === 401) { return undefined; }
+
+  const resBody = await res.json();
   return resBody;
 };
 
