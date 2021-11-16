@@ -11,6 +11,8 @@ import CityWeather from './services/weather/CityWeather';
 import Gpa from './services/epitech/Gpa';
 import Credits from './services/epitech/Credits';
 import Netsoul from './services/epitech/Netsoul';
+import Stock from './services/exchange/Stock';
+import Currency from './services/exchange/Currency';
 
 const InstanceSwitch = ({ instance, data }) => {
   switch (instance.service) {
@@ -25,6 +27,12 @@ const InstanceSwitch = ({ instance, data }) => {
         case 'gpa': return <Gpa data={data} />;
         case 'credits': return <Credits data={data} />;
         case 'netsoul': return <Netsoul data={data} />;
+        default: return null;
+      }
+    case 'exchange':
+      switch (instance.widget) {
+        case 'stock': return <Stock data={data} />;
+        case 'currency': return <Currency data={data} />;
         default: return null;
       }
     default: return null;
