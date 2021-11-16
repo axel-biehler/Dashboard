@@ -8,6 +8,9 @@ import Close from '@mui/icons-material/Close';
 import request from '../api/request';
 import CityTemperature from './services/weather/CityTemperature';
 import CityWeather from './services/weather/CityWeather';
+import Gpa from './services/epitech/Gpa';
+import Credits from './services/epitech/Credits';
+import Netsoul from './services/epitech/Netsoul';
 
 const InstanceSwitch = ({ instance, data }) => {
   switch (instance.service) {
@@ -15,6 +18,13 @@ const InstanceSwitch = ({ instance, data }) => {
       switch (instance.widget) {
         case 'cityTemperature': return <CityTemperature data={data} />;
         case 'cityWeather': return <CityWeather data={data} />;
+        default: return null;
+      }
+    case 'epitech':
+      switch (instance.widget) {
+        case 'gpa': return <Gpa data={data} />;
+        case 'credits': return <Credits data={data} />;
+        case 'netsoul': return <Netsoul data={data} />;
         default: return null;
       }
     default: return null;
