@@ -5,14 +5,16 @@ import {
 } from '@mui/material';
 import Refresh from '@mui/icons-material/Refresh';
 import Close from '@mui/icons-material/Close';
-import CityTemperature from './services/weather/CityTemperature';
 import request from '../api/request';
+import CityTemperature from './services/weather/CityTemperature';
+import CityWeather from './services/weather/CityWeather';
 
 const InstanceSwitch = ({ instance, data }) => {
   switch (instance.service) {
     case 'weather':
       switch (instance.widget) {
         case 'cityTemperature': return <CityTemperature data={data} />;
+        case 'cityWeather': return <CityWeather data={data} />;
         default: return null;
       }
     default: return null;
