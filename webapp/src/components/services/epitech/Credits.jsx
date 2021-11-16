@@ -8,6 +8,10 @@ const Credits = ({ data }) => (
     </Typography>
     <Typography variant="h2" component="div">
       {data.credits}
+      {' '}
+      /
+      {' '}
+      {data.norm}
     </Typography>
   </div>
 );
