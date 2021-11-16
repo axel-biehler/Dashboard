@@ -5,7 +5,7 @@ const { loadDirectory } = require('../utils');
 
 module.exports = loadDirectory(__dirname).map((service) => ({
   ...service,
-  widgets: loadDirectory(path.join(__dirname, service.name, 'widgets')).map((wid) => ({
+  widgets: loadDirectory(path.join(__dirname, service.name)).map((wid) => ({
     ...wid,
     params: [
       ...wid.params,
@@ -15,6 +15,6 @@ module.exports = loadDirectory(__dirname).map((service) => ({
         placeholder: 'Refresh rate (in seconds)',
       },
     ],
-    route: require(path.join(__dirname, service.name, 'widgets', wid.name, 'route.js')),
+    route: require(path.join(__dirname, service.name, wid.name, 'route.js')),
   })),
 }));
