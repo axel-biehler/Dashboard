@@ -15,28 +15,29 @@ import Stock from './services/exchange/Stock';
 import Currency from './services/exchange/Currency';
 
 const InstanceSwitch = ({ instance, data }) => {
-  switch (instance.service) {
-    case 'weather':
-      switch (instance.widget) {
-        case 'cityTemperature': return <CityTemperature data={data} />;
-        case 'cityWeather': return <CityWeather data={data} />;
-        default: return null;
-      }
-    case 'epitech':
-      switch (instance.widget) {
-        case 'gpa': return <Gpa data={data} />;
-        case 'credits': return <Credits data={data} />;
-        case 'netsoul': return <Netsoul data={data} />;
-        default: return null;
-      }
-    case 'exchange':
-      switch (instance.widget) {
-        case 'stock': return <Stock data={data} />;
-        case 'currency': return <Currency data={data} />;
-        default: return null;
-      }
-    default: return null;
-  }
+  const services = {
+    weather: {
+      cityTemperature: CityTemperature,
+      cityWeather: CityWeather,
+    },
+    epitech: {
+      gpa: Gpa,
+      credits: Credits,
+      netsoul: Netsoul,
+    },
+    exchange: {
+      stock: Stock,
+      currency: Currency,
+    },
+  };
+
+  const service = services[instance.service];
+  if (service === undefined) { return null; }
+
+  const Widget = service[instance.widget];
+  if (Widget === undefined) { return null; }
+
+  return <Widget data={data} />;
 };
 
 const Instance = ({ instance, deleteInstance }) => {

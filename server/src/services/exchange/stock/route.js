@@ -13,6 +13,7 @@ const route = async (req, res) => {
       status: true,
       name: body.quoteResponse.result[0].shortName,
       price: body.quoteResponse.result[0].regularMarketPrice,
+      currency: body.quoteResponse.result[0].financialCurrency,
     });
   } catch (e) {
     console.error(e);
