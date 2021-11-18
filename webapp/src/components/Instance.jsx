@@ -6,7 +6,6 @@ import {
 import Refresh from '@mui/icons-material/Refresh';
 import Close from '@mui/icons-material/Close';
 import request from '../api/request';
-import CityTemperature from './services/weather/CityTemperature';
 import CityWeather from './services/weather/CityWeather';
 import Gpa from './services/epitech/Gpa';
 import Credits from './services/epitech/Credits';
@@ -17,7 +16,6 @@ import Currency from './services/exchange/Currency';
 const InstanceSwitch = ({ instance, data }) => {
   const services = {
     weather: {
-      cityTemperature: CityTemperature,
       cityWeather: CityWeather,
     },
     epitech: {
@@ -90,7 +88,10 @@ const Instance = ({ instance, deleteInstance }) => {
       display: 'flex', flexDirection: 'column', height: '100%', position: 'relative',
     }}
     >
-      <div style={{ display: 'block', padding: '8px' }}>
+      <div style={{
+        width: '100%', height: '100%', display: 'block',
+      }}
+      >
         {cardContent}
       </div>
       <div style={{ position: 'absolute', bottom: 8, right: 8 }}>

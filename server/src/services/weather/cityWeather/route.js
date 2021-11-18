@@ -6,10 +6,10 @@ const route = async (req, res) => {
     const body = await r.json();
     res.json({
       status: true,
-      weather: body.weather[0].main,
-      icon: body.weather[0].icon,
       city: body.name,
-      country: body.sys.country,
+      weather: body.weather[0].main,
+      weatherIcon: body.weather[0].icon,
+      temp: body.main.temp,
     });
   } catch (e) {
     console.error(e);
