@@ -11,7 +11,7 @@ const CityWeather = ({ data }) => (
     <Divider />
     <Box p={2} display="flex" flexGrow={1} flexDirection="column" alignItems="center" justifyContent="space-evenly">
       <Stack direction="row" spacing={2}>
-        <img style={{ maxWidth: 64, backgroundColor: '#33333315', borderRadius: '100%' }} src={`http://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`} alt="Weather icon" />
+        <img style={{ maxWidth: 64, backgroundColor: '#2196f3f0', borderRadius: '100%' }} src={`http://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`} alt="Weather icon" />
         <Typography variant="h2" component="div">
           {data.weather}
         </Typography>

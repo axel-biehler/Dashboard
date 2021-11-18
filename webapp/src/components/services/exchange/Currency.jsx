@@ -20,7 +20,7 @@ const Currency = ({ data }) => (
         =
         {' '}
         <b>
-          {data.price}
+          {Math.round(data.price * 100) / 100}
         </b>
         {' '}
         {data.secondCurrency}

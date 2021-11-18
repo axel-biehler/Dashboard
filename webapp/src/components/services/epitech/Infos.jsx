@@ -15,24 +15,26 @@ const Infos = ({ data }) => (
       {data.promo}
     </Typography>
     <Divider />
-    <Box p={2} display="flex" flexDirection="row" alignItems="center" justifyContent="space-around">
-      <Typography variant="h4" component="div" textAlign="center">GPA</Typography>
-      <Typography variant="h4" component="div" textAlign="center">Credits</Typography>
-    </Box>
     <Box p={2} display="flex" flexGrow={1} flexDirection="row" alignItems="center" justifyContent="space-evenly">
-      <Box display="flex" flexDirection="row">
-        <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto' }} variant="determinate" value={(data.gpa / 4) * 100} />
-        <Typography variant="h2" component="div">
-          <Box marginLeft={2}><b>{data.gpa}</b></Box>
-        </Typography>
+      <Box display="flex" flexDirection="column" justifyContent="space-evenly">
+        <Typography variant="h4" component="div" textAlign="center">GPA</Typography>
+        <Box display="flex" flexGrow={1} flexDirection="row">
+          <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto' }} variant="determinate" value={(data.gpa / 4) * 100} />
+          <Typography variant="h2" component="div">
+            <Box marginLeft={2}><b>{data.gpa}</b></Box>
+          </Typography>
+        </Box>
       </Box>
-      <Box display="flex" flexDirection="row">
-        <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto', marginRight: 3 }} variant="determinate" value={(data.credits / data.objCredits) * 100} />
-        <Typography variant="h2" component="div">
-          <Box marginLeft={2}><b>{data.credits}</b></Box>
-          <Divider />
-          <Box marginLeft={2}>{data.objCredits}</Box>
-        </Typography>
+      <Box display="flex" flexDirection="column" justifyContent="space-evenly">
+        <Typography variant="h4" component="div" textAlign="center">Credits</Typography>
+        <Box display="flex" flexGrow={1} flexDirection="row">
+          <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto', marginRight: 3 }} variant="determinate" value={(data.credits / data.objCredits) * 100} />
+          <Typography variant="h2" component="div">
+            <Box marginLeft={2}><b>{data.credits}</b></Box>
+            <Divider />
+            <Box marginLeft={2}>{data.objCredits}</Box>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   </Box>
