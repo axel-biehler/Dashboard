@@ -11,9 +11,9 @@ const route = async (req, res) => {
     const body = await r.json();
     res.json({
       status: true,
-      name: body.quoteResponse.result[0].shortName,
       price: body.quoteResponse.result[0].regularMarketPrice,
-      currency: body.quoteResponse.result[0].financialCurrency,
+      firstCurrency: req.instance.params.firstCurrency,
+      secondCurrency: req.instance.params.secondCurrency,
     });
   } catch (e) {
     console.error(e);

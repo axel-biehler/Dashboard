@@ -1,15 +1,32 @@
-import { Typography } from '@mui/material';
+import { Typography, Box, Divider } from '@mui/material';
 import React from 'react';
 
 const Currency = ({ data }) => (
-  <div>
-    <Typography sx={{ fontSize: 24, mb: 0 }} color="text.secondary" gutterBottom>
-      {data.name}
+  <Box sx={{ height: '100%' }} display="flex" flexDirection="column">
+    <Typography sx={{ padding: 2, fontSize: 24, mb: 0 }} color="text.secondary" gutterBottom>
+      {data.firstCurrency}
+      {' '}
+      /
+      {' '}
+      {data.secondCurrency}
     </Typography>
-    <Typography variant="h2" component="div">
-      {data.price}
-    </Typography>
-  </div>
+    <Divider />
+    <Box p={2} display="flex" flexGrow={1} flexDirection="column" alignItems="center" justifyContent="space-evenly">
+      <Typography mt={2} variant="h2" component="div">
+        1
+        {' '}
+        {data.firstCurrency}
+        {' '}
+        =
+        {' '}
+        <b>
+          {data.price}
+        </b>
+        {' '}
+        {data.secondCurrency}
+      </Typography>
+    </Box>
+  </Box>
 );
 
 export default Currency;
