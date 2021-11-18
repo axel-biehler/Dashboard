@@ -7,8 +7,7 @@ import Refresh from '@mui/icons-material/Refresh';
 import Close from '@mui/icons-material/Close';
 import request from '../api/request';
 import CityWeather from './services/weather/CityWeather';
-import Gpa from './services/epitech/Gpa';
-import Credits from './services/epitech/Credits';
+import Infos from './services/epitech/Infos';
 import Netsoul from './services/epitech/Netsoul';
 import Stock from './services/exchange/Stock';
 import Currency from './services/exchange/Currency';
@@ -19,8 +18,7 @@ const InstanceSwitch = ({ instance, data }) => {
       cityWeather: CityWeather,
     },
     epitech: {
-      gpa: Gpa,
-      credits: Credits,
+      infos: Infos,
       netsoul: Netsoul,
     },
     exchange: {

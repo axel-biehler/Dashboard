@@ -1,0 +1,41 @@
+import {
+  Typography, Box, Divider, CircularProgress,
+} from '@mui/material';
+import React from 'react';
+
+const Infos = ({ data }) => (
+  <Box sx={{ height: '100%' }} display="flex" flexDirection="column">
+    <Typography sx={{ padding: 2, fontSize: 24, mb: 0 }} color="text.secondary" gutterBottom>
+      {data.name}
+      {' '}
+      -
+      {' '}
+      Epitech
+      {' '}
+      {data.promo}
+    </Typography>
+    <Divider />
+    <Box p={2} display="flex" flexDirection="row" alignItems="center" justifyContent="space-around">
+      <Typography variant="h4" component="div" textAlign="center">GPA</Typography>
+      <Typography variant="h4" component="div" textAlign="center">Credits</Typography>
+    </Box>
+    <Box p={2} display="flex" flexGrow={1} flexDirection="row" alignItems="center" justifyContent="space-evenly">
+      <Box display="flex" flexDirection="row">
+        <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto' }} variant="determinate" value={(data.gpa / 4) * 100} />
+        <Typography variant="h2" component="div">
+          <Box marginLeft={2}><b>{data.gpa}</b></Box>
+        </Typography>
+      </Box>
+      <Box display="flex" flexDirection="row">
+        <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto', marginRight: 3 }} variant="determinate" value={(data.credits / data.objCredits) * 100} />
+        <Typography variant="h2" component="div">
+          <Box marginLeft={2}><b>{data.credits}</b></Box>
+          <Divider />
+          <Box marginLeft={2}>{data.objCredits}</Box>
+        </Typography>
+      </Box>
+    </Box>
+  </Box>
+);
+
+export default Infos;
