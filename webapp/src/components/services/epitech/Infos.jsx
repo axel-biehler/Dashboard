@@ -28,12 +28,12 @@ const Infos = ({ data }) => (
       <Box display="flex" flexDirection="column" justifyContent="space-evenly">
         <Typography variant="h4" component="div" textAlign="center">Credits</Typography>
         <Box display="flex" flexGrow={1} flexDirection="row">
-          <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto', marginRight: 3 }} variant="determinate" value={(data.credits / data.objCredits) * 100} />
           <Typography variant="h2" component="div">
-            <Box marginLeft={2}><b>{data.credits}</b></Box>
+            <Box><b>{data.credits}</b></Box>
             <Divider />
-            <Box marginLeft={2}>{data.objCredits}</Box>
+            <Box>{data.objCredits}</Box>
           </Typography>
+          <CircularProgress sx={{ marginTop: 'auto', marginBottom: 'auto', marginLeft: 3 }} variant="determinate" value={(data.credits / data.objCredits) * 100} />
         </Box>
       </Box>
     </Box>
