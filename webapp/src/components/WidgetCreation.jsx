@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import request from '../api/request';
 import WidgetCreationParameters from './WidgetCreationParameters';
 import WidgetCreationServiceSelection from './WidgetCreationServiceSelection';
 import WidgetCreationWidgetSelection from './WidgetCreationWidgetSelection';
 
 const WidgetCreation = ({
-  step, nextStep, close, refreshInstances,
+  services, step, nextStep, close, refreshInstances,
 }) => {
-  const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedWidget, setSelectedWidget] = useState(null);
 
@@ -35,11 +34,6 @@ const WidgetCreation = ({
     }
     console.log(res.error);
   };
-
-  useEffect(async () => {
-    const res = await request('/services');
-    setServices(res);
-  }, []);
 
   switch (step) {
     case 0:

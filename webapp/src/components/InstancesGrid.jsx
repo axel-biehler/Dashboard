@@ -14,7 +14,9 @@ const generateLayout = (is, height, width, count) => is.map((instance, index) =>
   h: height,
 }));
 
-const InstancesGrid = ({ instances, deleteInstance }) => {
+const InstancesGrid = ({
+  services, instances, deleteInstance, refreshInstances,
+}) => {
   const layouts = {
     lg: generateLayout(instances, 4, 4, 3),
     md: generateLayout(instances, 4, 4, 3),
@@ -36,7 +38,12 @@ const InstancesGrid = ({ instances, deleteInstance }) => {
     >
       {instances.map((i) => (
         <Card key={i._id}>
-          <Instance instance={i} deleteInstance={deleteInstance} />
+          <Instance
+            services={services}
+            instance={i}
+            deleteInstance={deleteInstance}
+            refreshInstances={refreshInstances}
+          />
         </Card>
       ))}
     </ResponsiveGridLayout>

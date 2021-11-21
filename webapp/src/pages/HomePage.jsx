@@ -7,7 +7,13 @@ import request from '../api/request';
 
 const HomePage = () => {
   const [instances, setInstances] = useState([]);
+  const [services, setServices] = useState([]);
   const history = useHistory();
+
+  useEffect(async () => {
+    const res = await request('/services');
+    setServices(res);
+  }, []);
 
   const loadInstances = async () => {
     try {
@@ -33,8 +39,13 @@ const HomePage = () => {
   return (
     <div>
       <AppBar />
-      <InstancesGrid instances={instances} deleteInstance={deleteInstance} />
-      <WidgetCreationModal refreshInstances={loadInstances} />
+      <InstancesGrid
+        services={services}
+        instances={instances}
+        deleteInstance={deleteInstance}
+        refreshInstances={loadInstances}
+      />
+      <WidgetCreationModal services={services} refreshInstances={loadInstances} />
     </div>
   );
 };

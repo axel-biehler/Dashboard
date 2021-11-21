@@ -4,6 +4,7 @@ const services = require('../../services');
 
 const router = express.Router();
 router.post('/', require('./createInstance'));
+router.post('/:id', require('./editInstance'));
 router.delete('/:id', require('./deleteInstance'));
 router.get('/', require('./listInstances'));
 
