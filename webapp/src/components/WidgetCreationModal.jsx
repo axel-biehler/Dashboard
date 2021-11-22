@@ -5,7 +5,7 @@ import {
 import Add from '@mui/icons-material/Add';
 import WidgetCreation from './WidgetCreation';
 
-const WidgetCreationModal = ({ refreshInstances }) => {
+const WidgetCreationModal = ({ services, refreshInstances }) => {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const handleOpen = () => setOpen(true);
@@ -44,6 +44,7 @@ const WidgetCreationModal = ({ refreshInstances }) => {
                 </Button>
               </Typography>
               <WidgetCreation
+                services={services}
                 step={step}
                 nextStep={nextStep}
                 close={handleClose}

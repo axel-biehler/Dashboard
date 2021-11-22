@@ -5,12 +5,14 @@ import {
 } from '@mui/material';
 import Refresh from '@mui/icons-material/Refresh';
 import Close from '@mui/icons-material/Close';
+import Edit from '@mui/icons-material/Edit';
 import request from '../api/request';
 import CityWeather from './services/weather/CityWeather';
 import Infos from './services/epitech/Infos';
 import Netsoul from './services/epitech/Netsoul';
 import Stock from './services/exchange/Stock';
 import Currency from './services/exchange/Currency';
+import InstanceParamsModal from './InstanceParamsModal';
 
 const InstanceSwitch = ({ instance, data }) => {
   const services = {
@@ -36,10 +38,17 @@ const InstanceSwitch = ({ instance, data }) => {
   return <Widget data={data} />;
 };
 
-const Instance = ({ instance, deleteInstance }) => {
+const Instance = ({
+  services, instance, deleteInstance, refreshInstances,
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [modalStatus, setModalStatus] = useState(false);
+
+  const closeModal = () => {
+    setModalStatus(false);
+  };
 
   const loadData = async () => {
     setIsLoading(true);
@@ -58,6 +67,10 @@ const Instance = ({ instance, deleteInstance }) => {
 
   const onRefreshClick = async () => {
     await loadData();
+  };
+
+  const onEditClick = () => {
+    setModalStatus(true);
   };
 
   const onDeleteClick = async () => {
@@ -94,8 +107,17 @@ const Instance = ({ instance, deleteInstance }) => {
       </div>
       <div style={{ position: 'absolute', bottom: 8, right: 8 }}>
         <Button size="small" onClick={onRefreshClick}><Refresh /></Button>
+        <Button size="small" onClick={onEditClick}><Edit /></Button>
         <Button size="small" onClick={onDeleteClick}><Close /></Button>
       </div>
+      <InstanceParamsModal
+        services={services}
+        refreshInstances={refreshInstances}
+        refreshInstanceData={loadData}
+        instance={instance}
+        status={modalStatus}
+        close={closeModal}
+      />
     </div>
   );
 };
