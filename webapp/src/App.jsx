@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import {
-  HomePage, IndexPage, LoginPage, LogoutPage, NotFoundPage, RegisterPage, RedditPage,
+  HomePage, IndexPage, LoginPage, LogoutPage, NotFoundPage, RegisterPage, RedditPage, ProfilePage,
 } from './pages';
 
 const App = () => (
@@ -24,6 +24,9 @@ const App = () => (
       </Route>
       <Route path="/reddit">
         <RedditPage />
+      </Route>
+      <Route path="/profile">
+        <ProfilePage />
       </Route>
       <NotFoundPage />
     </Switch>

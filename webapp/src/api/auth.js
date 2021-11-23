@@ -14,6 +14,8 @@ const clearToken = () => {
   localStorage.clear(LOCAL_USERNAME_KEY);
 };
 
+const updateUsername = (newUsername) => localStorage.setItem(LOCAL_USERNAME_KEY, newUsername);
+
 const getToken = () => localStorage.getItem(LOCAL_TOKEN_KEY);
 
 const getUsername = () => localStorage.getItem(LOCAL_USERNAME_KEY);
@@ -23,4 +25,5 @@ export {
   clearToken,
   getToken,
   getUsername,
+  updateUsername,
 };

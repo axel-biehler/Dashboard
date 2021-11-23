@@ -16,7 +16,7 @@ const RedditPage = () => {
     const { state } = params;
 
     if (state === 'tomate' && !err) {
-      const res = await request('/auth/reddit', 'POST', { code });
+      const res = await request('/auth/reddit/login', 'POST', { code });
       if (!res.status) {
         setErrorMessage(res.err);
       } else {

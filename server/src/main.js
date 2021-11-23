@@ -16,6 +16,7 @@ const main = async () => {
 
   app.use('/services', authMiddleware, routes.services);
   app.use('/instances', authMiddleware, routes.instances);
+  app.use('/profile', authMiddleware, routes.profile);
 
   await database.database.connectToDatabase();
   app.listen(port, () => {

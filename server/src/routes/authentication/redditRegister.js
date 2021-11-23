@@ -33,22 +33,21 @@ const redditOauth = async (req, res) => {
     const user = await User.findOne({ username: resBodyProfile.name });
     const defaultUser = new User({
       username: resBodyProfile.name,
-      redditAccessToken: resBody.access_token,
+      redditRefreshToken: resBody.access_token,
     });
-
-    console.log('MON USER', user);
 
     try {
       if (!user) {
         await defaultUser.save();
         res.json({
           token: authentication.generateJwt(defaultUser),
+          redditAccessToken: resBody.access_token,
           status: true,
         });
       } else {
         res.json({
-          token: authentication.generateJwt(user),
-          status: true,
+          status: false,
+          error: 'Account is already registered',
         });
       }
     } catch (err) {
