@@ -34,7 +34,6 @@ const getProfile = async (req, res) => {
       status: false,
       error: 'internal error',
     });
-    console.log('here');
   }
 };
 

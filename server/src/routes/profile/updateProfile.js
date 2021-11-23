@@ -3,8 +3,6 @@ const { User } = require('../../database');
 const updateProfile = async (req, res) => {
   const profile = req.body;
 
-  console.log(profile);
-
   if (typeof profile !== 'object') {
     res.status(400).json({
       status: false,
