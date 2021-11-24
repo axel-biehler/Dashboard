@@ -8,6 +8,7 @@ let authString = 'DQ67vBicYn-BsvRASDYUvg:gjDsEnpuEYx8yBckbVVDSHk9gYKvFA';
 authString = Buffer.from(authString).toString('base64');
 
 const redditOauth = async (req, res) => {
+  const { name } = req.query;
   const resAccessToken = await fetch('https://www.reddit.com/api/v1/access_token', {
     method: 'POST',
     headers: {
@@ -31,7 +32,10 @@ const redditOauth = async (req, res) => {
 
     const resBodyProfile = await resProfile.json();
 
-    const user = await User.findOne({ redditId: resBodyProfile.name });
+    const user = name !== null ? await User.findOne({ username: name })
+      : await User.findOne({ redditId: resBodyProfile.name });
+
+    console.log(name);
     const defaultUser = new User({
       username: resBodyProfile.name,
       redditRefreshToken: refreshToken,
@@ -48,6 +52,8 @@ const redditOauth = async (req, res) => {
         });
       } else {
         user.redditRefreshToken = refreshToken;
+        user.redditId = resBodyProfile.name;
+        user.save();
         res.json({
           token: authentication.generateJwt(user),
           status: true,

@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 import request from '../api/request';
-import { setToken } from '../api/auth';
+import { getUsername, setToken } from '../api/auth';
 
 const RedditPage = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -11,12 +11,10 @@ const RedditPage = () => {
   const onLoad = async () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
-    const { code } = params;
-    const { err } = params;
-    const { state } = params;
+    const { code, err, state } = params;
 
     if (state === 'tomate' && !err) {
-      const res = await request('/auth/reddit/login', 'POST', { code });
+      const res = await request(`/auth/reddit/login?name=${getUsername()}`, 'POST', { code });
       if (!res.status) {
         setErrorMessage(res.err);
       } else {

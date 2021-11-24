@@ -20,6 +20,7 @@ const redditOauth = async (req, res) => {
 
   if (resAccessToken.ok) {
     const resBody = await resAccessToken.json();
+    const refreshToken = req.body.code;
 
     const resProfile = await fetch('https://oauth.reddit.com/api/v1/me', {
       method: 'GET',
@@ -30,10 +31,11 @@ const redditOauth = async (req, res) => {
 
     const resBodyProfile = await resProfile.json();
 
-    const user = await User.findOne({ username: resBodyProfile.name });
+    const user = await User.findOne({ redditId: resBodyProfile.name });
     const defaultUser = new User({
       username: resBodyProfile.name,
-      redditRefreshToken: resBody.access_token,
+      redditRefreshToken: refreshToken,
+      redditId: resBodyProfile.name,
     });
 
     try {
@@ -45,9 +47,10 @@ const redditOauth = async (req, res) => {
           status: true,
         });
       } else {
+        user.redditRefreshToken = refreshToken;
         res.json({
-          status: false,
-          error: 'Account is already registered',
+          token: authentication.generateJwt(user),
+          status: true,
         });
       }
     } catch (err) {

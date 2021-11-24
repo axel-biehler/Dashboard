@@ -27,8 +27,6 @@ const updatePassword = async (req, res) => {
     const newPass = await authentication.hashPassword(password);
     const user = await User.findOne({ username: req.username });
 
-    console.log(newPass, user);
-
     if (!user) {
       res.json({
         status: false,
