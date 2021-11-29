@@ -6,23 +6,43 @@ import Instance from './Instance';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const generateLayout = (is, height, width, count) => is.map((instance, index) => ({
-  i: instance._id,
-  x: (index % count) * width,
-  y: (index / count) * height,
-  w: width,
-  h: height,
-}));
+const generateLayout = (key, is, height, width, count) => {
+  const savedLayoutStr = localStorage.getItem(key);
+
+  if (savedLayoutStr !== null) {
+    const savedLayout = JSON.parse(savedLayoutStr);
+
+    if (savedLayout.length === is.length) {
+      return savedLayout;
+    }
+  }
+
+  return is.map((instance, index) => ({
+    i: instance._id,
+    x: (index % count) * width,
+    y: (index / count) * height,
+    w: width,
+    h: height,
+  }));
+};
 
 const InstancesGrid = ({
   services, instances, deleteInstance, refreshInstances,
 }) => {
   const layouts = {
-    lg: generateLayout(instances, 4, 4, 3),
-    md: generateLayout(instances, 4, 4, 3),
-    sm: generateLayout(instances, 4, 3, 2),
-    xs: generateLayout(instances, 4, 2, 3),
-    xxs: generateLayout(instances, 4, 2, 1),
+    lg: generateLayout('lg', instances, 4, 4, 3),
+    md: generateLayout('md', instances, 4, 4, 3),
+    sm: generateLayout('sm', instances, 4, 3, 2),
+    xs: generateLayout('xs', instances, 4, 2, 3),
+    xxs: generateLayout('xxs', instances, 4, 2, 1),
+  };
+
+  const saveLayout = (_, l) => {
+    Object.entries(l).forEach(([key, layout]) => {
+      if (layout.length > 0) {
+        localStorage.setItem(key, JSON.stringify(layout));
+      }
+    });
   };
 
   return (
@@ -35,6 +55,7 @@ const InstancesGrid = ({
         lg: 12, md: 12, sm: 6, xs: 4, xxs: 2,
       }}
       layouts={layouts}
+      onLayoutChange={saveLayout}
     >
       {instances.map((i) => (
         <Card key={i._id}>
