@@ -1,10 +1,12 @@
+const validator = require('email-validator');
+const { v4 } = require('uuid');
 const { User } = require('../../database');
 const authentication = require('../../authentication');
 
 const register = async (req, res) => {
-  let { username, password } = req.body;
+  let { email, username, password } = req.body;
 
-  if (typeof username !== 'string' || typeof password !== 'string') {
+  if (typeof email !== 'string' || typeof username !== 'string' || typeof password !== 'string') {
     res.status(400).json({
       status: false,
       error: 'invalid body',
@@ -12,8 +14,17 @@ const register = async (req, res) => {
     return;
   }
 
+  email = email.trim();
   username = username.trim();
   password = password.trim();
+
+  if (!validator.validate(email)) {
+    res.status(400).json({
+      status: false,
+      error: 'email not valid',
+    });
+    return;
+  }
 
   if (username.length < 1) {
     res.status(400).json({
@@ -41,13 +52,17 @@ const register = async (req, res) => {
     }
 
     const u = new User({
+      email,
       username,
       password: await authentication.hashPassword(password),
+      emailToken: v4(),
     });
     await u.save();
+    await authentication.sendEmailVerification(u);
 
     res.json({
       status: true,
+      error: 'please check your email for an email validation',
     });
   } catch (err) {
     console.error(err);

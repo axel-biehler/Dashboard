@@ -26,6 +26,13 @@ const register = async (req, res) => {
       });
       return;
     }
+    if (u.email !== undefined && u.emailToken !== undefined) {
+      res.json({
+        status: false,
+        error: 'email not verified',
+      });
+      return;
+    }
 
     if (!(await authentication.verifyPassword(u.password, password))) {
       res.json({
