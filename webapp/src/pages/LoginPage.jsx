@@ -35,7 +35,7 @@ const LoginPage = () => {
     const clientId = 'DQ67vBicYn-BsvRASDYUvg';
 
     const url = `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&`
-  + `response_type=code&state=tomate&redirect_uri=${redirectUri}&duration=temporary&scope=identity`;
+  + `response_type=code&state=tomate&redirect_uri=${redirectUri}&duration=temporary&scope=identity read mysubreddits `;
 
     const newWindow = window.open(url, '_self');
 

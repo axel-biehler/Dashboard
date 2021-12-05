@@ -13,6 +13,7 @@ import Netsoul from './services/epitech/Netsoul';
 import Stock from './services/exchange/Stock';
 import Currency from './services/exchange/Currency';
 import InstanceParamsModal from './InstanceParamsModal';
+import RedditSub from './services/reddit/RedditSub';
 
 const InstanceSwitch = ({ instance, data }) => {
   const services = {
@@ -26,6 +27,9 @@ const InstanceSwitch = ({ instance, data }) => {
     exchange: {
       stock: Stock,
       currency: Currency,
+    },
+    reddit: {
+      redditSub: RedditSub,
     },
   };
 

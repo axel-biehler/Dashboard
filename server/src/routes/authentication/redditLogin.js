@@ -32,14 +32,14 @@ const redditOauth = async (req, res) => {
 
     const resBodyProfile = await resProfile.json();
 
-    const user = name !== null ? await User.findOne({ username: name })
+    const user = name != null ? await User.findOne({ username: name })
       : await User.findOne({ redditId: resBodyProfile.name });
 
-    console.log(name);
     const defaultUser = new User({
       username: resBodyProfile.name,
       redditRefreshToken: refreshToken,
       redditId: resBodyProfile.name,
+      redditAccessToken: resBody.access_token,
     });
 
     try {
@@ -51,6 +51,7 @@ const redditOauth = async (req, res) => {
           status: true,
         });
       } else {
+        user.redditAccessToken = resBody.access_token;
         user.redditRefreshToken = refreshToken;
         user.redditId = resBodyProfile.name;
         user.save();

@@ -99,7 +99,7 @@ const ProfilePage = () => {
     const clientId = 'DQ67vBicYn-BsvRASDYUvg';
 
     const url = `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&`
-  + `response_type=code&state=tomate&redirect_uri=${redirectUri}&duration=temporary&scope=identity`;
+  + `response_type=code&state=tomate&redirect_uri=${redirectUri}&duration=temporary&scope=identity read`;
 
     const newWindow = window.open(url, '_self');
 
@@ -123,11 +123,11 @@ const ProfilePage = () => {
         </Grid>
 
         <Grid item justifyContent="center">
-          <Typography variant="h4" fontSize="large">Reddit</Typography>
+          <Typography style={{ padding: 5 }} variant="h4" fontSize="large">Reddit</Typography>
         </Grid>
         <Grid item>
           <Button
-            disabled={disabled || profile?.redditId != null}
+            disabled={profile?.redditId != null}
             variant="contained"
             color="success"
             onClick={linkReddit}
@@ -137,7 +137,7 @@ const ProfilePage = () => {
         </Grid>
         <Grid item>
           <Button
-            disabled={disabled || profile?.redditId == null}
+            disabled={profile?.redditId == null || profile.password == null}
             variant="contained"
             color="error"
             onClick={removeReddit}
@@ -178,88 +178,19 @@ const ProfilePage = () => {
       username: profile.username,
       password: password.confirmPass,
     });
+
     if (resPassword.status) {
+      const res = await getProfile(username);
+
+      if (!res.status) {
+        setErrorMessage(res.error);
+      } else {
+        setProfile(res.user);
+      }
       setToken(resPassword.token);
       handleClose();
     }
   };
-
-  const ModalPassword = () => (
-    <div>
-      <Modal
-        onBackdropClick={() => {}}
-        open={open}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        onClose={handleClose}
-      >
-        <Box sx={style}>
-          <FormControl>
-            <Typography
-              variant="h3"
-              sx={{ fontWeight: 'bold', mt: 3 }}
-            >
-              Change password
-
-            </Typography>
-            {profile?.password && (
-              <TextField
-                label="Last password"
-                fullWidth
-                sx={{ mt: 3 }}
-                variant="outlined"
-                type="password"
-                value={password.lastPass}
-                onChange={handleChange('lastPass')}
-              />
-            )}
-            <TextField
-              error={password.newPass === ''}
-              label="new password"
-              fullWidth
-              sx={{ mt: 3 }}
-              variant="outlined"
-              type="password"
-              value={password.newPass}
-              onChange={handleChange('newPass')}
-            />
-            <TextField
-              error={password.newPass !== password.confirmPass || password.newPass === ''}
-              label="Confirm new password"
-              fullWidth
-              sx={{ mt: 3 }}
-              variant="outlined"
-              type="password"
-              value={password.confirmPass}
-              onChange={handleChange('confirmPass')}
-            />
-            <Grid container spacing={5} justifyContent="center" sx={{ mt: 0.5 }}>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={handleClose}
-                >
-                  Cancel
-
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  disabled={password.newPass !== password.confirmPass || password.newPass === ''}
-                  variant="contained"
-                  color="success"
-                  onClick={changePassword}
-                >
-                  Confirm
-                </Button>
-              </Grid>
-            </Grid>
-          </FormControl>
-        </Box>
-      </Modal>
-    </div>
-  );
 
   return (
     <div>
@@ -282,15 +213,14 @@ const ProfilePage = () => {
           sx={{ mt: 3 }}
           onChange={(e) => { setUsername(e.target.value); }}
         />
-        <Typography variant="h2" sx={{ fontWeight: 'bold', mt: 3 }}>Linked account</Typography>
-        <RedditLink x />
         <Grid container spacing={5} justifyContent="center">
           <Grid item>
             <Box textAlign="center" sx={{ mt: 3 }}>
-              <Button onClick={cancel}>
-                Cancel
-
-              </Button>
+              { disabled === false ? (
+                <Button onClick={cancel}>
+                  Cancel
+                </Button>
+              ) : null}
             </Box>
           </Grid>
           <Grid item>
@@ -308,8 +238,83 @@ const ProfilePage = () => {
             </Box>
           </Grid>
         </Grid>
+        <Typography variant="h2" sx={{ fontWeight: 'bold', mt: 3 }}>Linked account</Typography>
+        <RedditLink x />
       </Container>
-      <ModalPassword />
+      <div>
+        <Modal
+          onBackdropClick={() => {}}
+          open={open}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          onClose={handleClose}
+        >
+          <Box sx={style}>
+            <FormControl>
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: 'bold', mt: 3 }}
+              >
+                Change password
+
+              </Typography>
+              {profile?.password && (
+              <TextField
+                label="Last password"
+                fullWidth
+                sx={{ mt: 3 }}
+                variant="outlined"
+                type="password"
+                value={password.lastPass}
+                onChange={handleChange('lastPass')}
+              />
+              )}
+              <TextField
+                error={password.newPass === ''}
+                label="new password"
+                fullWidth
+                sx={{ mt: 3 }}
+                variant="outlined"
+                type="password"
+                value={password.newPass}
+                onChange={handleChange('newPass')}
+              />
+              <TextField
+                error={password.newPass !== password.confirmPass || password.newPass === ''}
+                label="Confirm new password"
+                fullWidth
+                sx={{ mt: 3 }}
+                variant="outlined"
+                type="password"
+                value={password.confirmPass}
+                onChange={handleChange('confirmPass')}
+              />
+              <Grid container spacing={5} justifyContent="center" sx={{ mt: 0.5 }}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={handleClose}
+                  >
+                    Cancel
+
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    disabled={password.newPass !== password.confirmPass || password.newPass === ''}
+                    variant="contained"
+                    color="success"
+                    onClick={changePassword}
+                  >
+                    Confirm
+                  </Button>
+                </Grid>
+              </Grid>
+            </FormControl>
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 };

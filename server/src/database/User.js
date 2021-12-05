@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   username: String,
   password: String,
   redditRefreshToken: String,
+  redditAccessToken: String,
   redditId: String,
 });
 
