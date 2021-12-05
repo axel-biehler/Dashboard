@@ -7,6 +7,9 @@ const UserSchema = new Schema({
   password: String,
   email: String,
   emailToken: String,
+  redditRefreshToken: String,
+  redditAccessToken: String,
+  redditId: String,
 });
 
 const User = model(TABLE_NAME, UserSchema);

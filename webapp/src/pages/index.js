@@ -5,6 +5,8 @@ import LogoutPage from './LogoutPage';
 import NotFoundPage from './NotFoundPage';
 import RegisterPage from './RegisterPage';
 import VerifyEmailPage from './VerifyEmailPage';
+import RedditPage from './RedditPage';
+import ProfilePage from './ProfilePage';
 
 export {
   HomePage,
@@ -13,5 +15,7 @@ export {
   LogoutPage,
   NotFoundPage,
   RegisterPage,
+  RedditPage,
+  ProfilePage,
   VerifyEmailPage,
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-  Card, CardContent, Container, Typography, TextField, Button, Grid, Alert, AlertTitle,
+  Card, CardContent, Container, Typography, TextField, Button, Grid, Alert, AlertTitle, Box,
 } from '@mui/material';
 import request from '../api/request';
 import { setToken } from '../api/auth';
@@ -28,6 +28,18 @@ const LoginPage = () => {
       setToken(res.token);
       history.push('/home');
     }
+  };
+
+  const onLoginRedditClicked = () => {
+    const redirectUri = 'http://localhost:3000/reddit';
+    const clientId = 'DQ67vBicYn-BsvRASDYUvg';
+
+    const url = `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&`
+  + `response_type=code&state=tomate&redirect_uri=${redirectUri}&duration=temporary&scope=identity read mysubreddits `;
+
+    const newWindow = window.open(url, '_self');
+
+    if (newWindow) newWindow.opener = null;
   };
 
   return (
@@ -67,6 +79,9 @@ const LoginPage = () => {
               <Button variant="contained" onClick={onLoginClicked}>Login</Button>
             </Grid>
           </Grid>
+          <Box textAlign="center">
+            <Button variant="contained" onClick={onLoginRedditClicked}>Login with Reddit</Button>
+          </Box>
         </CardContent>
       </Card>
     </Container>
