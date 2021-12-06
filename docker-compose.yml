@@ -12,6 +12,8 @@ services:
       - backend
     environment:
       - MONGO_URL=mongodb://dashboard:SyA7Zr4cbcDwjD@mongo
+    env_file:
+    - "server/.env"
   mongo:
     image: mongo:5.0.4
     ports:
